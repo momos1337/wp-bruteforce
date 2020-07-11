@@ -45,4 +45,5 @@ if($http == 302){
     echo "\n\033[31m[!] \033[0mFailed! ~> ".$url." ~ ".$user." | ".$lists."";
    }
 }
+echo "\n";
 ?>
